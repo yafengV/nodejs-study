@@ -46,13 +46,26 @@ function uploadFiles(files) {
 }
 
 function downloadFiles() {
-    $.ajax({
-        type: "get",
-        url: "/download",
-        success: function (response) {
-            console.log(response)
-        }
-    });
+    download('', 'download')
+}
+
+function downloadTest() {
+    download('test.txt', 'downloadTest')
+}
+
+
+function download(filename, path) {
+    var href = path
+    if (filename.length > 0) {
+        href += '?filename='+ filename
+    }
+    var element = document.createElement('a');
+    element.setAttribute('href', href);
+    element.setAttribute('download', filename);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
 }
 
 $(document).ready(function(){
@@ -63,4 +76,7 @@ $(document).ready(function(){
     $("#upload-btn").click(function(){
         preUploadFiles(files)
     });
+    $('#download-btn').click(function(){
+        downloadTest()
+    })
 });
